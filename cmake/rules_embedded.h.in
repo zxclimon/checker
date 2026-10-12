@@ -1,0 +1,3 @@
+#pragma once
+
+inline constexpr char embedded_rules[] = R"BEDROCK_RULES(@BEDROCK_RULES@)BEDROCK_RULES";
