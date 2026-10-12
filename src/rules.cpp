@@ -38,6 +38,10 @@ int collect_match(YR_SCAN_CONTEXT* context, int message, void* data, void* user)
     auto* rule = static_cast<YR_RULE*>(data);
     RuleMatch result;
     result.rule = rule->identifier;
+    const char* tag = nullptr;
+    yr_rule_tags_foreach(rule, tag) {
+        result.review_required |= std::string_view(tag) == "review";
+    }
     YR_META* meta = nullptr;
     yr_rule_metas_foreach(rule, meta) {
         if (meta->type == META_TYPE_STRING && std::string_view(meta->identifier) == "description") {

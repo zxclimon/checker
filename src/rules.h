@@ -24,6 +24,7 @@ struct Evidence {
 struct RuleMatch {
     std::string rule;
     std::string description;
+    bool review_required{};
     std::vector<Evidence> evidence;
 };
 

@@ -63,3 +63,32 @@ rule Bedrock_Packet_Loader : loader_features
     condition:
         $client and $game and all of ($client_hook, $send_hook, $remapped, $loaded)
 }
+
+rule Bedrock_Kion_ExternalClient : external_client_features
+{
+    strings:
+        $identity = "KionClient" ascii wide nocase
+        $packages = "FindPackagesByPackageFamily\x00"
+        $read = "ReadProcessMemory\x00"
+        $write = "WriteProcessMemory\x00"
+        $protect = "VirtualProtectEx\x00"
+    condition:
+        all of them
+}
+
+rule Bedrock_ExternalClient_Profile : review
+{
+    strings:
+        $packages = "FindPackagesByPackageFamily\x00"
+        $read = "ReadProcessMemory\x00"
+        $write = "WriteProcessMemory\x00"
+        $protect = "VirtualProtectEx\x00"
+        $allocate = "VirtualAllocEx\x00"
+        $modules_first = "Module32First\x00"
+        $modules_next = "Module32Next\x00"
+        $input_hook = "SetWindowsHookExA\x00"
+        $graphics = "D3DXCreateTextureFromFileA\x00"
+        $event_log = "ClearEventLogA\x00"
+    condition:
+        all of them and not Bedrock_Kion_ExternalClient
+}

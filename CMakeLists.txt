@@ -22,7 +22,7 @@ set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS rules/bedrock.yar
 file(READ rules/bedrock.yar BEDROCK_RULES)
 configure_file(cmake/rules_embedded.h.in generated/rules_embedded.h @ONLY)
 
-add_library(checker_core STATIC src/rules.cpp src/process.cpp)
+add_library(checker_core STATIC src/rules.cpp src/process.cpp src/files.cpp)
 target_include_directories(checker_core PUBLIC src PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
 target_compile_definitions(checker_core PUBLIC UNICODE _UNICODE WIN32_LEAN_AND_MEAN NOMINMAX _WIN32_WINNT=0x0A00)
 target_link_libraries(checker_core PUBLIC yara PRIVATE psapi)
